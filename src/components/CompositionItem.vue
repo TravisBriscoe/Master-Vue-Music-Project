@@ -14,7 +14,7 @@
     <div v-show="showForm">
       <div class="text-white text-center font-bold p-4 mb-4" v-if="show_alert"
         :class="alert_variant">
-        {{alert_message}}
+        {{ alert_message }}
       </div>
       <vee-form :validation-schema="schema" :initial-values="song"
       @submit="edit">
@@ -106,7 +106,6 @@ export default {
       this.alert_message = 'Success!';
     },
     async deleteSong() {
-      console.log(this.song.url);
       const storageRef = storage.ref();
       const songRef = storageRef.child(`songs/${this.song.original_name}`);
 
