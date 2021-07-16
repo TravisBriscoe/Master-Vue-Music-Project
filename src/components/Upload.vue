@@ -66,6 +66,18 @@ export default {
           return;
         }
 
+        if (!navigator.onLine) {
+          this.uploads.push({
+            task: {},
+            current_progress: 100,
+            name: file.name,
+            variant: 'bg-red-400',
+            icon: 'fas fa-times',
+            text_class: 'text-red-400',
+          });
+          return;
+        }
+
         const storageRef = storage.ref(); // music-2f209.appspot.com
         const songsRef = storageRef.child(`songs/${file.name}`);
         const task = songsRef.put(file);
@@ -82,12 +94,10 @@ export default {
         task.on('state_changed', (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           this.uploads[uploadIdx].current_progress = progress;
-        }, (error) => {
+        }, () => {
           this.uploads[uploadIdx].variants = 'bg-red-400';
           this.uploads[uploadIdx].icon = 'fas fa-times';
           this.uploads[uploadIdx].text_class = 'text-red-400';
-
-          console.log(error);
         }, async () => {
           const song = {
             uid: auth.currentUser.uid,

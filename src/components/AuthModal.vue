@@ -71,7 +71,9 @@ export default {
   },
   name: 'AuthModal',
   computed: {
-    ...mapState(['authModalShow']),
+    ...mapState({
+      authModalShow: (state) => state.auth.authModalShow,
+    }),
   },
   methods: {
     ...mapMutations(['toggleAuthModal']),
